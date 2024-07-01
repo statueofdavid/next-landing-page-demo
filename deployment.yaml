@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: next-landing-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: next-landing-demo
+  template:
+    metadata:
+      labels:
+        app: next-landing-demo
+    spec:
+      containers:
+      - name: next-landing-demo
+        image: next-landing-demo:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+
