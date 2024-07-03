@@ -1,21 +1,32 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: next-landing-demo
-spec:
-  replicas: 1
+apiVersion: apps/v1 
+kind: Deployment   
+metadata:          
+  name: next-landing-demo     
+  labels:                   
+    app: next-landing-demo          
+spec:              
+  replicas: 3
+  strategy:                 
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
   selector:
     matchLabels:
       app: next-landing-demo
-  template:
+  template:              
     metadata:
       labels:
-        app: next-landing-demo
-    spec:
+        app: next-landing-demo  
+    spec:                
       containers:
       - name: next-landing-demo
-        image: next-landing-demo:latest
-        imagePullPolicy: Never
+        image: statueofdavid/next-landing-demo:latest
+        imagePullPolicy: IfNotPresent                
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
         ports:
         - containerPort: 3000
-
+      restartPolicy: Always
